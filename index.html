@@ -36,6 +36,7 @@
             justify-content: center;
             background-color: #45a049;
             padding: 10px;
+            position: relative;
         }
 
         nav a {
@@ -44,10 +45,43 @@
             margin: 0 15px;
             font-size: 1.1rem;
             transition: color 0.3s ease;
+            position: relative;
         }
 
         nav a:hover {
             color: #f1c40f;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #45a049;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            top: 100%;
+            left: 0;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #4CAF50;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
 
         .hero {
@@ -151,6 +185,15 @@
             .tools-grid {
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             }
+
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dropdown-content {
+                position: static;
+            }
         }
     </style>
     <!-- Google AdSense -->
@@ -163,8 +206,33 @@
 
     <nav>
         <a href="#">Home</a>
-        <a href="#">Image Tools</a>
-        <a href="#">PDF Tools</a>
+        <div class="dropdown">
+            <a href="#">Image Tools</a>
+            <div class="dropdown-content">
+                <a href="#">Image Compressor</a>
+                <a href="#">Image Resizer</a>
+                <a href="#">Image Cropper</a>
+                <a href="#">Image Converter</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#">PDF Tools</a>
+            <div class="dropdown-content">
+                <a href="#">PDF Converter</a>
+                <a href="#">PDF Merger</a>
+                <a href="#">PDF Splitter</a>
+                <a href="#">PDF Compressor</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#">Other Tools</a>
+            <div class="dropdown-content">
+                <a href="#">QR Code Generator</a>
+                <a href="#">Color Picker</a>
+                <a href="#">File Converter</a>
+                <a href="#">Password Generator</a>
+            </div>
+        </div>
         <a href="#">About</a>
     </nav>
 
@@ -179,9 +247,8 @@
             <img src="https://via.placeholder.com/60" alt="Image Compressor">
             <h3>Image Compressor</h3>
             <p>Reduce image file size without losing quality.</p>
-            <a href="/Tools/img-compress.html">Use Tool</a>
+            <a href="#">Use Tool</a>
         </div>
-
         <div class="tool-card">
             <img src="https://via.placeholder.com/60" alt="Image Resizer">
             <h3>Image Resizer</h3>
