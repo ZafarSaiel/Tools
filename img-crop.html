@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Crop your images online with our fully responsive image cropping tool. Remove unwanted areas and focus on what matters.">
+    <meta name="keywords" content="image cropper, crop images, online image cropper, image tools">
+    <meta name="author" content="Your Name">
+    <title>Image Cropper - Online Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <style>
+        /* CSS Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #45a049;
+            padding: 10px;
+            position: relative;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #f1c40f;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #45a049;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            top: 100%;
+            left: 0;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #4CAF50;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        #crop-tool {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        #crop-tool h2 {
+            margin-top: 0;
+            font-size: 2rem;
+            color: #4CAF50;
+        }
+
+        #crop-tool input[type="file"] {
+            display: none;
+        }
+
+        #crop-tool label {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #crop-tool label:hover {
+            background-color: #45a049;
+        }
+
+        #image-container {
+            margin-top: 20px;
+            position: relative;
+            max-width: 100%;
+        }
+
+        #image-preview {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        #download-link {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #download-link:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            #crop-tool h2 {
+                font-size: 1.5rem;
+            }
+
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dropdown-content {
+                position: static;
+            }
+        }
+    </style>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_SENSE_ID" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>Online Tools</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="dropdown">
+            <a href="#">Image Tools</a>
+            <div class="dropdown-content">
+                <a href="image-compressor.html">Image Compressor</a>
+                <a href="image-resizer.html">Image Resizer</a>
+                <a href="image-cropper.html">Image Cropper</a>
+                <a href="#">Image Converter</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#">PDF Tools</a>
+            <div class="dropdown-content">
+                <a href="#">PDF Converter</a>
+                <a href="#">PDF Merger</a>
+                <a href="#">PDF Splitter</a>
+                <a href="#">PDF Compressor</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#">Other Tools</a>
+            <div class="dropdown-content">
+                <a href="#">QR Code Generator</a>
+                <a href="#">Color Picker</a>
+                <a href="#">File Converter</a>
+                <a href="#">Password Generator</a>
+            </div>
+        </div>
+        <a href="#">About</a>
+    </nav>
+
+    <section id="crop-tool">
+        <h2>Image Cropper</h2>
+        <label for="image-input">Choose Image</label>
+        <input type="file" id="image-input" accept="image/*">
+        <div id="image-container">
+            <img id="image-preview" src="#" alt="Image Preview" style="display: none;">
+        </div>
+        <a id="download-link" href="#" download="cropped-image.jpg">Download Cropped Image</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Online Tools. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <script>
+        // JavaScript Functionality
+        const imageInput = document.getElementById('image-input');
+        const imagePreview = document.getElementById('image-preview');
+        const downloadLink = document.getElementById('download-link');
+        let cropper;
+
+        imageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+
+                    // Initialize Cropper.js
+                    if (cropper) {
+                        cropper.destroy();
+                    }
+                    cropper = new Cropper(imagePreview, {
+                        aspectRatio: NaN, // Free aspect ratio
+                        viewMode: 1,
+                        autoCropArea: 1,
+                        responsive: true,
+                        guides: true,
+                        center: true,
+                        background: false,
+                        movable: true,
+                        rotatable: true,
+                        scalable: true,
+                        zoomable: true,
+                        crop: function(event) {
+                            // You can access crop data here if needed
+                        }
+                    });
+
+                    // Enable download link
+                    downloadLink.style.display = 'inline-block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        downloadLink.addEventListener('click', function(e) {
+            if (!cropper) {
+                e.preventDefault();
+                alert('Please upload and crop an image first.');
+                return;
+            }
+
+            // Get cropped image as a blob
+            cropper.getCroppedCanvas().toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                downloadLink.href = url;
+            }, 'image/jpeg');
+        });
+    </script>
+</body>
+</html>
