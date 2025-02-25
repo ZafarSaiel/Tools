@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Convert your images online with our fully responsive image conversion tool. Convert images to JPG, PNG, WebP, and more.">
-    <meta name="keywords" content="image converter, convert images, online image converter, image tools">
+    <meta name="description" content="Convert images to JPG, PNG, WebP, and more with our fully responsive Image Converter tool. Easily change image formats online.">
+    <meta name="keywords" content="Image Converter, Convert Images, Online Image Converter, JPG, PNG, WebP">
     <meta name="author" content="Your Name">
     <title>Image Converter - Online Tools</title>
     <style>
@@ -89,7 +89,7 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
+            max-width: 800px;
             margin: 40px auto;
             text-align: center;
         }
@@ -118,12 +118,12 @@
             background-color: #45a049;
         }
 
-        #converter-tool select {
+        #format-select {
             margin: 20px 0;
             padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
             font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
 
         #convert-btn {
@@ -141,15 +141,16 @@
             background-color: #45a049;
         }
 
-        #image-container {
+        #image-preview {
             margin-top: 20px;
+            display: none;
         }
 
-        #image-container img {
+        #image-preview img {
             max-width: 100%;
             height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
 
         #download-link {
@@ -186,11 +187,34 @@
             transition: width 0.5s ease;
         }
 
-        #success-message {
+        /* Notification Styling */
+        #notification {
             margin-top: 20px;
-            color: #4CAF50;
-            font-size: 1.2rem;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
             display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Ad Container Styling */
+        .ad-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .ad-container iframe {
+            border: none;
         }
 
         footer {
@@ -225,8 +249,8 @@
             }
         }
     </style>
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_SENSE_ID" crossorigin="anonymous"></script>
+    <!-- Google AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_UNIT_ID" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -248,22 +272,23 @@
             <a href="#">PDF Tools</a>
             <div class="dropdown-content">
                 <a href="file-converter.html">File Converter</a>
-                <a href="#">PDF Merger</a>
-                <a href="#">PDF Splitter</a>
-                <a href="#">PDF Compressor</a>
+                <a href="pdf-merger.html">PDF Merger</a>
+                <a href="pdf-splitter.html">PDF Splitter</a>
+                <a href="pdf-compressor.html">PDF Compressor</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="#">Other Tools</a>
             <div class="dropdown-content">
-                <a href="#">QR Code Generator</a>
-                <a href="#">Color Picker</a>
-                <a href="#">File Converter</a>
-                <a href="#">Password Generator</a>
+                <a href="qr-generator.html">QR Code Generator</a>
+                <a href="color-picker.html">Color Picker</a>
+                <a href="file-converter.html">File Converter</a>
+                <a href="password-generator.html">Password Generator</a>
             </div>
         </div>
         <a href="#">About</a>
     </nav>
+
     <!-- Ad Container -->
     <div class="ad-container">
         <ins class="adsbygoogle"
@@ -282,16 +307,11 @@
         <label for="image-input">Choose Image</label>
         <input type="file" id="image-input" accept="image/*">
         <br>
-        <label for="format-select">Convert To:</label>
         <select id="format-select">
-            <option value="jpg">JPG</option>
-            <option value="png">PNG</option>
-            <option value="webp">WebP</option>
-            <option value="gif">GIF</option>
-            <option value="bmp">BMP</option>
-            <option value="tiff">TIFF</option>
-            <option value="ico">ICO</option>
-            <option value="svg">SVG</option>
+            <option value="jpg">Convert to JPG</option>
+            <option value="png">Convert to PNG</option>
+            <option value="webp">Convert to WebP</option>
+            <option value="bmp">Convert to BMP</option>
         </select>
         <br>
         <button id="convert-btn">Convert Image</button>
@@ -301,14 +321,18 @@
             <div id="progress-bar"></div>
         </div>
 
-        <!-- Success Message -->
-        <div id="success-message">Your image is converted! 🎉</div>
-
-        <div id="image-container">
-            <img id="converted-image" src="#" alt="Converted Image" style="display: none;">
+        <!-- Image Preview -->
+        <div id="image-preview">
+            <img id="preview" src="#" alt="Preview">
         </div>
+
+        <!-- Download Link -->
         <a id="download-link" href="#" download="converted-image">Download Converted Image</a>
+
+        <!-- Notification -->
+        <div id="notification">Your image is converted! 🎉</div>
     </section>
+
     <!-- Ad Container -->
     <div class="ad-container">
         <ins class="adsbygoogle"
@@ -328,16 +352,33 @@
 
     <script>
         // JavaScript Functionality
-        document.getElementById('convert-btn').addEventListener('click', function() {
-            const fileInput = document.getElementById('image-input');
-            const formatSelect = document.getElementById('format-select');
-            const convertedImage = document.getElementById('converted-image');
-            const downloadLink = document.getElementById('download-link');
-            const progressContainer = document.getElementById('progress-container');
-            const progressBar = document.getElementById('progress-bar');
-            const successMessage = document.getElementById('success-message');
+        const imageInput = document.getElementById('image-input');
+        const formatSelect = document.getElementById('format-select');
+        const convertBtn = document.getElementById('convert-btn');
+        const preview = document.getElementById('preview');
+        const imagePreview = document.getElementById('image-preview');
+        const downloadLink = document.getElementById('download-link');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const notification = document.getElementById('notification');
 
-            if (fileInput.files.length === 0) {
+        // Handle image upload
+        imageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Convert image
+        convertBtn.addEventListener('click', function() {
+            const file = imageInput.files[0];
+            if (!file) {
                 alert('Please select an image to convert.');
                 return;
             }
@@ -346,9 +387,8 @@
             progressContainer.style.display = 'block';
             progressBar.style.width = '0%';
 
-            const file = fileInput.files[0];
+            const format = formatSelect.value;
             const reader = new FileReader();
-
             reader.onload = function(e) {
                 const img = new Image();
                 img.src = e.target.result;
@@ -356,39 +396,32 @@
                 img.onload = function() {
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
-
                     canvas.width = img.width;
                     canvas.height = img.height;
 
+                    // Draw image on canvas
                     ctx.drawImage(img, 0, 0);
 
-                    // Simulate conversion progress
-                    progressBar.style.width = '50%';
-
-                    const format = formatSelect.value;
-                    const mimeType = `image/${format}`;
+                    // Convert image to selected format
                     canvas.toBlob(function(blob) {
-                        const convertedUrl = URL.createObjectURL(blob);
-                        convertedImage.src = convertedUrl;
-                        convertedImage.style.display = 'block';
-                        downloadLink.href = convertedUrl;
+                        const url = URL.createObjectURL(blob);
+
+                        // Update progress bar
+                        progressBar.style.width = '100%';
+
+                        // Show notification and download link
+                        notification.style.display = 'block';
+                        downloadLink.href = url;
                         downloadLink.download = `converted-image.${format}`;
                         downloadLink.style.display = 'inline-block';
-
-                        // Show success message
-                        successMessage.style.display = 'block';
-
-                        // Complete progress bar
-                        progressBar.style.width = '100%';
 
                         // Hide progress bar after a short delay
                         setTimeout(() => {
                             progressContainer.style.display = 'none';
                         }, 1000);
-                    }, mimeType);
+                    }, `image/${format}`);
                 };
             };
-
             reader.readAsDataURL(file);
         });
     </script>
