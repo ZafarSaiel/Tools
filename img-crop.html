@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Crop your images online with our fully responsive image cropping tool. Remove unwanted areas and focus on what matters.">
-    <meta name="keywords" content="image cropper, crop images, online image cropper, image tools">
+    <meta name="description" content="Crop images online with our fully responsive Image Cropper tool. Easily remove unwanted areas from your images.">
+    <meta name="keywords" content="Image Cropper, Crop Images, Online Image Cropper, Image Editing">
     <meta name="author" content="Your Name">
     <title>Image Cropper - Online Tools</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
     <style>
         /* CSS Styling */
         body {
@@ -85,7 +84,7 @@
             display: block;
         }
 
-        #crop-tool {
+        #cropper-tool {
             background-color: white;
             padding: 30px;
             border-radius: 10px;
@@ -95,17 +94,17 @@
             text-align: center;
         }
 
-        #crop-tool h2 {
+        #cropper-tool h2 {
             margin-top: 0;
             font-size: 2rem;
             color: #4CAF50;
         }
 
-        #crop-tool input[type="file"] {
+        #cropper-tool input[type="file"] {
             display: none;
         }
 
-        #crop-tool label {
+        #cropper-tool label {
             display: inline-block;
             background-color: #4CAF50;
             color: white;
@@ -115,21 +114,44 @@
             transition: background-color 0.3s ease;
         }
 
-        #crop-tool label:hover {
+        #cropper-tool label:hover {
+            background-color: #45a049;
+        }
+
+        #crop-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        #crop-btn:hover {
             background-color: #45a049;
         }
 
         #image-container {
             margin-top: 20px;
             position: relative;
-            max-width: 100%;
+            display: inline-block;
         }
 
-        #image-preview {
+        #image-container img {
             max-width: 100%;
             height: auto;
-            display: block;
-            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #crop-box {
+            position: absolute;
+            border: 2px dashed #4CAF50;
+            background-color: rgba(76, 175, 80, 0.2);
+            cursor: move;
         }
 
         #download-link {
@@ -145,6 +167,16 @@
 
         #download-link:hover {
             background-color: #45a049;
+        }
+
+        /* Ad Container Styling */
+        .ad-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .ad-container iframe {
+            border: none;
         }
 
         footer {
@@ -165,7 +197,7 @@
                 font-size: 2rem;
             }
 
-            #crop-tool h2 {
+            #cropper-tool h2 {
                 font-size: 1.5rem;
             }
 
@@ -179,8 +211,8 @@
             }
         }
     </style>
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_SENSE_ID" crossorigin="anonymous"></script>
+    <!-- Google AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_UNIT_ID" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -195,29 +227,30 @@
                 <a href="image-compressor.html">Image Compressor</a>
                 <a href="image-resizer.html">Image Resizer</a>
                 <a href="image-cropper.html">Image Cropper</a>
-                <a href="#">Image Converter</a>
+                <a href="image-converter.html">Image Converter</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="#">PDF Tools</a>
             <div class="dropdown-content">
-                <a href="#">PDF Converter</a>
-                <a href="#">PDF Merger</a>
-                <a href="#">PDF Splitter</a>
-                <a href="#">PDF Compressor</a>
+                <a href="file-converter.html">File Converter</a>
+                <a href="pdf-merger.html">PDF Merger</a>
+                <a href="pdf-splitter.html">PDF Splitter</a>
+                <a href="pdf-compressor.html">PDF Compressor</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="#">Other Tools</a>
             <div class="dropdown-content">
-                <a href="#">QR Code Generator</a>
-                <a href="#">Color Picker</a>
-                <a href="#">File Converter</a>
-                <a href="#">Password Generator</a>
+                <a href="qr-generator.html">QR Code Generator</a>
+                <a href="color-picker.html">Color Picker</a>
+                <a href="file-converter.html">File Converter</a>
+                <a href="password-generator.html">Password Generator</a>
             </div>
         </div>
         <a href="#">About</a>
     </nav>
+
     <!-- Ad Container -->
     <div class="ad-container">
         <ins class="adsbygoogle"
@@ -231,15 +264,24 @@
         </script>
     </div>
 
-    <section id="crop-tool">
+    <section id="cropper-tool">
         <h2>Image Cropper</h2>
         <label for="image-input">Choose Image</label>
         <input type="file" id="image-input" accept="image/*">
+        <br>
+
+        <!-- Image Container -->
         <div id="image-container">
-            <img id="image-preview" src="#" alt="Image Preview" style="display: none;">
+            <img id="preview" src="#" alt="Preview">
+            <div id="crop-box"></div>
         </div>
-        <a id="download-link" href="#" download="cropped-image.jpg">Download Cropped Image</a>
+
+        <button id="crop-btn">Crop Image</button>
+
+        <!-- Download Link -->
+        <a id="download-link" href="#" download="cropped-image.png">Download Cropped Image</a>
     </section>
+
     <!-- Ad Container -->
     <div class="ad-container">
         <ins class="adsbygoogle"
@@ -257,62 +299,89 @@
         <p>&copy; 2023 Online Tools. All rights reserved.</p>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
     <script>
         // JavaScript Functionality
         const imageInput = document.getElementById('image-input');
-        const imagePreview = document.getElementById('image-preview');
+        const preview = document.getElementById('preview');
+        const imageContainer = document.getElementById('image-container');
+        const cropBox = document.getElementById('crop-box');
+        const cropBtn = document.getElementById('crop-btn');
         const downloadLink = document.getElementById('download-link');
-        let cropper;
 
-        imageInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
+        let isDragging = false;
+        let startX, startY, endX, endY;
+
+        // Handle image upload
+        imageInput.addEventListener('change', function() {
+            const file = this.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                    imagePreview.style.display = 'block';
-
-                    // Initialize Cropper.js
-                    if (cropper) {
-                        cropper.destroy();
-                    }
-                    cropper = new Cropper(imagePreview, {
-                        aspectRatio: NaN, // Free aspect ratio
-                        viewMode: 1,
-                        autoCropArea: 1,
-                        responsive: true,
-                        guides: true,
-                        center: true,
-                        background: false,
-                        movable: true,
-                        rotatable: true,
-                        scalable: true,
-                        zoomable: true,
-                        crop: function(event) {
-                            // You can access crop data here if needed
-                        }
-                    });
-
-                    // Enable download link
-                    downloadLink.style.display = 'inline-block';
+                    preview.src = e.target.result;
+                    cropBox.style.display = 'block';
                 };
                 reader.readAsDataURL(file);
             }
         });
 
-        downloadLink.addEventListener('click', function(e) {
-            if (!cropper) {
-                e.preventDefault();
-                alert('Please upload and crop an image first.');
-                return;
-            }
+        // Handle mouse events for cropping
+        imageContainer.addEventListener('mousedown', function(e) {
+            isDragging = true;
+            startX = e.offsetX;
+            startY = e.offsetY;
+            cropBox.style.left = `${startX}px`;
+            cropBox.style.top = `${startY}px`;
+            cropBox.style.width = '0';
+            cropBox.style.height = '0';
+        });
 
-            // Get cropped image as a blob
-            cropper.getCroppedCanvas().toBlob(function(blob) {
+        imageContainer.addEventListener('mousemove', function(e) {
+            if (isDragging) {
+                endX = e.offsetX;
+                endY = e.offsetY;
+                const width = endX - startX;
+                const height = endY - startY;
+                cropBox.style.width = `${Math.abs(width)}px`;
+                cropBox.style.height = `${Math.abs(height)}px`;
+                if (width < 0) {
+                    cropBox.style.left = `${endX}px`;
+                }
+                if (height < 0) {
+                    cropBox.style.top = `${endY}px`;
+                }
+            }
+        });
+
+        imageContainer.addEventListener('mouseup', function() {
+            isDragging = false;
+        });
+
+        // Crop image
+        cropBtn.addEventListener('click', function() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            const rect = cropBox.getBoundingClientRect();
+            const imgRect = preview.getBoundingClientRect();
+
+            const scaleX = preview.naturalWidth / imgRect.width;
+            const scaleY = preview.naturalHeight / imgRect.height;
+
+            const x = (rect.left - imgRect.left) * scaleX;
+            const y = (rect.top - imgRect.top) * scaleY;
+            const width = rect.width * scaleX;
+            const height = rect.height * scaleY;
+
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(preview, x, y, width, height, 0, 0, width, height);
+
+            // Convert canvas to image and create download link
+            canvas.toBlob(function(blob) {
                 const url = URL.createObjectURL(blob);
                 downloadLink.href = url;
-            }, 'image/jpeg');
+                downloadLink.style.display = 'inline-block';
+            }, 'image/png');
         });
     </script>
 </body>
