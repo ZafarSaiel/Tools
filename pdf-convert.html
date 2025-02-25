@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Convert files to PDF or PDFs to other formats online with our fully responsive file conversion tool. Convert Word, Excel, PowerPoint, Images, and more.">
+    <meta name="keywords" content="file converter, convert to PDF, PDF to other formats, online file converter">
+    <meta name="author" content="Your Name">
+    <title>File Converter - Online Tools</title>
+    <style>
+        /* CSS Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #45a049;
+            padding: 10px;
+            position: relative;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #f1c40f;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #45a049;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            top: 100%;
+            left: 0;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #4CAF50;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        #converter-tool {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        #converter-tool h2 {
+            margin-top: 0;
+            font-size: 2rem;
+            color: #4CAF50;
+        }
+
+        #converter-tool input[type="file"] {
+            display: none;
+        }
+
+        #converter-tool label {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #converter-tool label:hover {
+            background-color: #45a049;
+        }
+
+        #converter-tool select {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        #convert-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        #convert-btn:hover {
+            background-color: #45a049;
+        }
+
+        #download-link {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #download-link:hover {
+            background-color: #45a049;
+        }
+
+        /* Progress Bar Styling */
+        #progress-container {
+            width: 100%;
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 20px;
+            overflow: hidden;
+            display: none;
+        }
+
+        #progress-bar {
+            width: 0;
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        #success-message {
+            margin-top: 20px;
+            color: #4CAF50;
+            font-size: 1.2rem;
+            display: none;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            #converter-tool h2 {
+                font-size: 1.5rem;
+            }
+
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dropdown-content {
+                position: static;
+            }
+        }
+    </style>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_SENSE_ID" crossorigin="anonymous"></script>
+    <!-- PDF-Lib for PDF Conversion -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Online Tools</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="dropdown">
+            <a href="#">Image Tools</a>
+            <div class="dropdown-content">
+                <a href="image-compressor.html">Image Compressor</a>
+                <a href="image-resizer.html">Image Resizer</a>
+                <a href="image-cropper.html">Image Cropper</a>
+                <a href="image-converter.html">Image Converter</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#">PDF Tools</a>
+            <div class="dropdown-content">
+                <a href="file-converter.html">File Converter</a>
+                <a href="#">PDF Merger</a>
+                <a href="#">PDF Splitter</a>
+                <a href="#">PDF Compressor</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#">Other Tools</a>
+            <div class="dropdown-content">
+                <a href="#">QR Code Generator</a>
+                <a href="#">Color Picker</a>
+                <a href="#">File Converter</a>
+                <a href="#">Password Generator</a>
+            </div>
+        </div>
+        <a href="#">About</a>
+    </nav>
+
+    <section id="converter-tool">
+        <h2>File Converter</h2>
+        <label for="file-input">Choose File</label>
+        <input type="file" id="file-input" accept="*/*">
+        <br>
+        <label for="conversion-type">Conversion Type:</label>
+        <select id="conversion-type">
+            <option value="to-pdf">Convert to PDF</option>
+            <option value="pdf-to-word">PDF to Word</option>
+            <option value="pdf-to-excel">PDF to Excel</option>
+            <option value="pdf-to-image">PDF to Image</option>
+        </select>
+        <br>
+        <button id="convert-btn">Convert File</button>
+
+        <!-- Progress Bar -->
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+
+        <!-- Success Message -->
+        <div id="success-message">Your file is converted! 🎉</div>
+
+        <!-- Download Link -->
+        <a id="download-link" href="#" download="converted-file">Download Converted File</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Online Tools. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // JavaScript Functionality
+        document.getElementById('convert-btn').addEventListener('click', async function() {
+            const fileInput = document.getElementById('file-input');
+            const conversionType = document.getElementById('conversion-type').value;
+            const downloadLink = document.getElementById('download-link');
+            const progressContainer = document.getElementById('progress-container');
+            const progressBar = document.getElementById('progress-bar');
+            const successMessage = document.getElementById('success-message');
+
+            if (fileInput.files.length === 0) {
+                alert('Please select a file to convert.');
+                return;
+            }
+
+            // Show progress bar
+            progressContainer.style.display = 'block';
+            progressBar.style.width = '0%';
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = async function(e) {
+                const fileData = e.target.result;
+
+                if (conversionType === 'to-pdf') {
+                    // Simulate conversion progress
+                    progressBar.style.width = '50%';
+
+                    // Convert file to PDF
+                    const pdfDoc = await PDFLib.PDFDocument.create();
+                    const page = pdfDoc.addPage();
+
+                    if (file.type.startsWith('image/')) {
+                        // Handle image files
+                        const img = new Image();
+                        img.src = fileData;
+
+                        await new Promise((resolve) => {
+                            img.onload = resolve;
+                        });
+
+                        const { width, height } = img;
+                        page.setSize(width, height);
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        const imageBytes = await new Promise((resolve) => {
+                            canvas.toBlob((blob) => {
+                                const reader = new FileReader();
+                                reader.onload = () => resolve(new Uint8Array(reader.result));
+                                reader.readAsArrayBuffer(blob);
+                            }, 'image/jpeg');
+                        });
+
+                        const image = await pdfDoc.embedJpg(imageBytes);
+                        page.drawImage(image, {
+                            x: 0,
+                            y: 0,
+                            width,
+                            height,
+                        });
+                    } else {
+                        // Handle non-image files (e.g., text files)
+                        const text = `File Name: ${file.name}\n\nFile Content:`;
+                        page.drawText(text, {
+                            x: 50,
+                            y: page.getHeight() - 50,
+                            size: 12,
+                        });
+                    }
+
+                    // Simulate conversion progress
+                    progressBar.style.width = '100%';
+
+                    const pdfBytes = await pdfDoc.save();
+                    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                    const url = URL.createObjectURL(blob);
+                    downloadLink.href = url;
+                    downloadLink.download = 'converted-file.pdf';
+                } else {
+                    // Handle other conversions (PDF to Word, Excel, Image)
+                    alert('This feature is not implemented yet. Please choose "Convert to PDF".');
+                    return;
+                }
+
+                // Show success message and download link
+                successMessage.style.display = 'block';
+                downloadLink.style.display = 'inline-block';
+
+                // Hide progress bar after a short delay
+                setTimeout(() => {
+                    progressContainer.style.display = 'none';
+                }, 1000);
+            };
+
+            if (file.type.startsWith('image/')) {
+                reader.readAsDataURL(file); // Read image files as Data URL
+            } else {
+                reader.readAsText(file); // Read non-image files as text
+            }
+        });
+    </script>
+</body>
+</html>
