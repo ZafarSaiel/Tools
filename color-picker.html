@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pick and copy colors from images or palettes with our fully responsive Color Picker tool. Easily extract HEX, RGB, and HSL color codes.">
+    <meta name="keywords" content="Color Picker, Pick Colors, Color Extractor, Online Tools">
+    <meta name="author" content="Your Name">
+    <title>Color Picker - Online Tools</title>
+    <style>
+        /* CSS Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #45a049;
+            padding: 10px;
+            position: relative;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #f1c40f;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #45a049;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            top: 100%;
+            left: 0;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #4CAF50;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        #color-picker-tool {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        #color-picker-tool h2 {
+            margin-top: 0;
+            font-size: 2rem;
+            color: #4CAF50;
+        }
+
+        #color-picker-tool input[type="file"] {
+            display: none;
+        }
+
+        #color-picker-tool label {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #color-picker-tool label:hover {
+            background-color: #45a049;
+        }
+
+        #image-preview {
+            margin-top: 20px;
+            display: none;
+        }
+
+        #image-preview img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: crosshair;
+        }
+
+        #color-info {
+            margin-top: 20px;
+            display: none;
+        }
+
+        #color-info p {
+            margin: 10px 0;
+            font-size: 1.1rem;
+        }
+
+        #color-preview {
+            width: 100px;
+            height: 50px;
+            margin: 10px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #copy-buttons {
+            margin-top: 20px;
+        }
+
+        #copy-buttons button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #copy-buttons button:hover {
+            background-color: #45a049;
+        }
+
+        /* Ad Container Styling */
+        .ad-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .ad-container iframe {
+            border: none;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            #color-picker-tool h2 {
+                font-size: 1.5rem;
+            }
+
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dropdown-content {
+                position: static;
+            }
+        }
+    </style>
+    <!-- Google AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_UNIT_ID" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>Online Tools</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="dropdown">
+            <a href="#">Image Tools</a>
+            <div class="dropdown-content">
+                <a href="image-compressor.html">Image Compressor</a>
+                <a href="image-resizer.html">Image Resizer</a>
+                <a href="image-cropper.html">Image Cropper</a>
+                <a href="image-converter.html">Image Converter</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#">PDF Tools</a>
+            <div class="dropdown-content">
+                <a href="file-converter.html">File Converter</a>
+                <a href="pdf-merger.html">PDF Merger</a>
+                <a href="pdf-splitter.html">PDF Splitter</a>
+                <a href="pdf-compressor.html">PDF Compressor</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#">Other Tools</a>
+            <div class="dropdown-content">
+                <a href="qr-generator.html">QR Code Generator</a>
+                <a href="color-picker.html">Color Picker</a>
+                <a href="#">File Converter</a>
+                <a href="#">Password Generator</a>
+            </div>
+        </div>
+        <a href="#">About</a>
+    </nav>
+
+    <!-- Ad Container -->
+    <div class="ad-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-YOUR_AD_UNIT_ID"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <section id="color-picker-tool">
+        <h2>Color Picker</h2>
+        <label for="image-input">Choose Image</label>
+        <input type="file" id="image-input" accept="image/*">
+        <br>
+
+        <!-- Image Preview -->
+        <div id="image-preview">
+            <img id="preview" src="#" alt="Preview">
+        </div>
+
+        <!-- Color Info -->
+        <div id="color-info">
+            <div id="color-preview"></div>
+            <p>HEX: <span id="hex-code">#FFFFFF</span></p>
+            <p>RGB: <span id="rgb-code">rgb(255, 255, 255)</span></p>
+            <p>HSL: <span id="hsl-code">hsl(0, 0%, 100%)</span></p>
+            <div id="copy-buttons">
+                <button id="copy-hex">Copy HEX</button>
+                <button id="copy-rgb">Copy RGB</button>
+                <button id="copy-hsl">Copy HSL</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ad Container -->
+    <div class="ad-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-YOUR_AD_UNIT_ID"
+             data-ad-slot="0987654321"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Online Tools. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // JavaScript Functionality
+        const imageInput = document.getElementById('image-input');
+        const preview = document.getElementById('preview');
+        const imagePreview = document.getElementById('image-preview');
+        const colorInfo = document.getElementById('color-info');
+        const colorPreview = document.getElementById('color-preview');
+        const hexCode = document.getElementById('hex-code');
+        const rgbCode = document.getElementById('rgb-code');
+        const hslCode = document.getElementById('hsl-code');
+        const copyHexBtn = document.getElementById('copy-hex');
+        const copyRgbBtn = document.getElementById('copy-rgb');
+        const copyHslBtn = document.getElementById('copy-hsl');
+
+        // Handle image upload
+        imageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    colorInfo.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Pick color from image
+        preview.addEventListener('click', function(e) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = preview.width;
+            canvas.height = preview.height;
+            ctx.drawImage(preview, 0, 0, canvas.width, canvas.height);
+
+            const rect = preview.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const pixel = ctx.getImageData(x, y, 1, 1).data;
+
+            const rgb = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
+            const hex = `#${pixel[0].toString(16).padStart(2, '0')}${pixel[1].toString(16).padStart(2, '0')}${pixel[2].toString(16).padStart(2, '0')}`;
+            const hsl = rgbToHsl(pixel[0], pixel[1], pixel[2]);
+
+            // Update color info
+            colorPreview.style.backgroundColor = rgb;
+            hexCode.textContent = hex;
+            rgbCode.textContent = rgb;
+            hslCode.textContent = hsl;
+        });
+
+        // Copy color codes
+        copyHexBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText(hexCode.textContent);
+            alert('HEX code copied to clipboard!');
+        });
+
+        copyRgbBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText(rgbCode.textContent);
+            alert('RGB code copied to clipboard!');
+        });
+
+        copyHslBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText(hslCode.textContent);
+            alert('HSL code copied to clipboard!');
+        });
+
+        // Convert RGB to HSL
+        function rgbToHsl(r, g, b) {
+            r /= 255, g /= 255, b /= 255;
+            const max = Math.max(r, g, b), min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+
+            if (max === min) {
+                h = s = 0; // achromatic
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+                }
+                h /= 6;
+            }
+
+            h = Math.round(h * 360);
+            s = Math.round(s * 100);
+            l = Math.round(l * 100);
+            return `hsl(${h}, ${s}%, ${l}%)`;
+        }
+    </script>
+</body>
+</html>
