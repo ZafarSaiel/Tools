@@ -172,6 +172,32 @@
             background-color: #45a049;
         }
 
+        /* Progress Bar Styling */
+        #progress-container {
+            width: 100%;
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 20px;
+            overflow: hidden;
+            display: none;
+        }
+
+        #progress-bar {
+            width: 0;
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        #success-message {
+            margin-top: 20px;
+            color: #4CAF50;
+            font-size: 1.2rem;
+            display: none;
+        }
+
         footer {
             background-color: #333;
             color: white;
@@ -224,14 +250,14 @@
             <div class="dropdown-content">
                 <a href="image-compressor.html">Image Compressor</a>
                 <a href="image-resizer.html">Image Resizer</a>
-                <a href="#">Image Cropper</a>
-                <a href="#">Image Converter</a>
+                <a href="image-cropper.html">Image Cropper</a>
+                <a href="image-converter.html">Image Converter</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="#">PDF Tools</a>
             <div class="dropdown-content">
-                <a href="#">PDF Converter</a>
+                <a href="file-converter.html">File Converter</a>
                 <a href="#">PDF Merger</a>
                 <a href="#">PDF Splitter</a>
                 <a href="#">PDF Compressor</a>
@@ -260,6 +286,15 @@
         <input type="number" id="height" placeholder="Height">
         <br>
         <button id="resize-btn">Resize Image</button>
+
+        <!-- Progress Bar -->
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+
+        <!-- Success Message -->
+        <div id="success-message">Your image is resized! 🎉</div>
+
         <div id="image-container">
             <img id="original-image" src="#" alt="Original Image" style="display: none;">
             <img id="resized-image" src="#" alt="Resized Image" style="display: none;">
@@ -280,6 +315,9 @@
             const originalImage = document.getElementById('original-image');
             const resizedImage = document.getElementById('resized-image');
             const downloadLink = document.getElementById('download-link');
+            const progressContainer = document.getElementById('progress-container');
+            const progressBar = document.getElementById('progress-bar');
+            const successMessage = document.getElementById('success-message');
 
             if (fileInput.files.length === 0) {
                 alert('Please select an image to resize.');
@@ -290,6 +328,10 @@
                 alert('Please enter valid width and height values.');
                 return;
             }
+
+            // Show progress bar
+            progressContainer.style.display = 'block';
+            progressBar.style.width = '0%';
 
             const file = fileInput.files[0];
             const reader = new FileReader();
@@ -310,11 +352,25 @@
 
                     ctx.drawImage(img, 0, 0, width, height);
 
+                    // Simulate resizing progress
+                    progressBar.style.width = '50%';
+
                     const resizedUrl = canvas.toDataURL('image/jpeg');
                     resizedImage.src = resizedUrl;
                     resizedImage.style.display = 'block';
                     downloadLink.href = resizedUrl;
                     downloadLink.style.display = 'inline-block';
+
+                    // Show success message
+                    successMessage.style.display = 'block';
+
+                    // Complete progress bar
+                    progressBar.style.width = '100%';
+
+                    // Hide progress bar after a short delay
+                    setTimeout(() => {
+                        progressContainer.style.display = 'none';
+                    }, 1000);
                 };
             };
 
