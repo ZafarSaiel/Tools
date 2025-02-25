@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Compress PDF files online with our fully responsive PDF compressor tool. Reduce PDF size quickly and easily.">
+    <meta name="keywords" content="PDF compressor, compress PDF, online PDF compressor, PDF tools">
+    <meta name="author" content="Your Name">
+    <title>PDF Compressor - Online Tools</title>
+    <style>
+        /* CSS Styling (Same as PDF Splitter) */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #45a049;
+            padding: 10px;
+            position: relative;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #f1c40f;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #45a049;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            top: 100%;
+            left: 0;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #4CAF50;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        #compressor-tool {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        #compressor-tool h2 {
+            margin-top: 0;
+            font-size: 2rem;
+            color: #4CAF50;
+        }
+
+        #compressor-tool input[type="file"] {
+            display: none;
+        }
+
+        #compressor-tool label {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #compressor-tool label:hover {
+            background-color: #45a049;
+        }
+
+        #compress-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        #compress-btn:hover {
+            background-color: #45a049;
+        }
+
+        #download-link {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #download-link:hover {
+            background-color: #45a049;
+        }
+
+        /* Progress Bar Styling */
+        #progress-container {
+            width: 100%;
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 20px;
+            overflow: hidden;
+            display: none;
+        }
+
+        #progress-bar {
+            width: 0;
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        /* Notification Styling */
+        #notification {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            #compressor-tool h2 {
+                font-size: 1.5rem;
+            }
+
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dropdown-content {
+                position: static;
+            }
+        }
+    </style>
+    <!-- PDF-Lib for PDF Manipulation -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <!-- FileSaver.js for saving files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Online Tools</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="dropdown">
+            <a href="#">Image Tools</a>
+            <div class="dropdown-content">
+                <a href="image-compressor.html">Image Compressor</a>
+                <a href="image-resizer.html">Image Resizer</a>
+                <a href="image-cropper.html">Image Cropper</a>
+                <a href="image-converter.html">Image Converter</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#">PDF Tools</a>
+            <div class="dropdown-content">
+                <a href="file-converter.html">File Converter</a>
+                <a href="pdf-merger.html">PDF Merger</a>
+                <a href="pdf-splitter.html">PDF Splitter</a>
+                <a href="#">PDF Compressor</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#">Other Tools</a>
+            <div class="dropdown-content">
+                <a href="#">QR Code Generator</a>
+                <a href="#">Color Picker</a>
+                <a href="#">File Converter</a>
+                <a href="#">Password Generator</a>
+            </div>
+        </div>
+        <a href="#">About</a>
+    </nav>
+
+    <section id="compressor-tool">
+        <h2>PDF Compressor</h2>
+        <label for="pdf-input">Choose PDF File</label>
+        <input type="file" id="pdf-input" accept="application/pdf">
+        <br>
+        <button id="compress-btn">Compress PDF</button>
+
+        <!-- Progress Bar -->
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+
+        <!-- Notification -->
+        <div id="notification">Your PDF is compressed! 🎉</div>
+
+        <!-- Download Link -->
+        <a id="download-link" href="#" download="compressed.pdf">Download Compressed PDF</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Online Tools. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // JavaScript Functionality
+        document.getElementById('compress-btn').addEventListener('click', async function() {
+            const fileInput = document.getElementById('pdf-input');
+            const downloadLink = document.getElementById('download-link');
+            const progressContainer = document.getElementById('progress-container');
+            const progressBar = document.getElementById('progress-bar');
+            const notification = document.getElementById('notification');
+
+            if (fileInput.files.length === 0) {
+                alert('Please select a PDF file to compress.');
+                return;
+            }
+
+            // Show progress bar
+            progressContainer.style.display = 'block';
+            progressBar.style.width = '0%';
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = async function(e) {
+                const existingPdfBytes = new Uint8Array(e.target.result);
+                const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
+
+                // Compress PDF by reducing image quality
+                const pages = pdfDoc.getPages();
+                for (let i = 0; i < pages.length; i++) {
+                    const page = pages[i];
+                    const images = page.getImages();
+                    for (const image of images) {
+                        image.setQuality(50); // Reduce image quality to 50%
+                    }
+
+                    // Update progress bar
+                    progressBar.style.width = `${((i + 1) / pages.length) * 100}%`;
+                }
+
+                // Save the compressed PDF
+                const pdfBytes = await pdfDoc.save();
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                const url = URL.createObjectURL(blob);
+
+                // Show notification and download link
+                notification.style.display = 'block';
+                downloadLink.href = url;
+                downloadLink.style.display = 'inline-block';
+
+                // Hide progress bar after a short delay
+                setTimeout(() => {
+                    progressContainer.style.display = 'none';
+                }, 1000);
+            };
+
+            reader.readAsArrayBuffer(file);
+        });
+    </script>
+</body>
+</html>
