@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Compress your images online with our fully responsive image compression tool. Optimize images for web use with adjustable compression levels.">
     <meta name="keywords" content="image compression, optimize images, image optimizer, online image compressor">
-    <meta name="author" content="ZS-Dev">
-    <title>Online Image Compression Tool</title>
+    <meta name="author" content="Your Name">
+    <title>Image Compressor - Online Tools</title>
     <style>
         /* CSS Styling */
         body {
@@ -31,10 +31,57 @@
             font-size: 2.5rem;
         }
 
-        main {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #45a049;
+            padding: 10px;
+            position: relative;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #f1c40f;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #45a049;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            top: 100%;
+            left: 0;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #4CAF50;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
 
         #compression-tool {
@@ -42,6 +89,8 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 40px auto;
             text-align: center;
         }
 
@@ -122,11 +171,6 @@
             background-color: #45a049;
         }
 
-        #ad-space {
-            margin-top: 40px;
-            text-align: center;
-        }
-
         footer {
             background-color: #333;
             color: white;
@@ -141,17 +185,26 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            #image-container img {
-                max-width: 100%;
-                margin: 10px 0;
-            }
-
             header h1 {
                 font-size: 2rem;
             }
 
             #compression-tool h2 {
                 font-size: 1.5rem;
+            }
+
+            #image-container img {
+                max-width: 100%;
+                margin: 10px 0;
+            }
+
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dropdown-content {
+                position: static;
             }
         }
     </style>
@@ -160,48 +213,63 @@
 </head>
 <body>
     <header>
-        <h1>Online Image Compression Tool</h1>
+        <h1>Online Tools</h1>
     </header>
 
-    <main>
-        <section id="compression-tool">
-            <h2>Compress Your Images</h2>
-            <label for="image-input">Choose Image</label>
-            <input type="file" id="image-input" accept="image/*">
-            <br>
-            <label for="compression-level">Compression Level:</label>
-            <select id="compression-level">
-                <option value="0.1">Low</option>
-                <option value="0.5" selected>Medium</option>
-                <option value="0.9">High</option>
-            </select>
-            <br>
-            <button id="compress-btn">Compress Image</button>
-            <div id="image-container">
-                <img id="original-image" src="#" alt="Original Image" style="display: none;">
-                <img id="compressed-image" src="#" alt="Compressed Image" style="display: none;">
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="dropdown">
+            <a href="#">Image Tools</a>
+            <div class="dropdown-content">
+                <a href="image-compressor.html">Image Compressor</a>
+                <a href="#">Image Resizer</a>
+                <a href="#">Image Cropper</a>
+                <a href="#">Image Converter</a>
             </div>
-            <a id="download-link" href="#" download="compressed-image.jpg">Download Compressed Image</a>
-        </section>
+        </div>
+        <div class="dropdown">
+            <a href="#">PDF Tools</a>
+            <div class="dropdown-content">
+                <a href="#">PDF Converter</a>
+                <a href="#">PDF Merger</a>
+                <a href="#">PDF Splitter</a>
+                <a href="#">PDF Compressor</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#">Other Tools</a>
+            <div class="dropdown-content">
+                <a href="#">QR Code Generator</a>
+                <a href="#">Color Picker</a>
+                <a href="#">File Converter</a>
+                <a href="#">Password Generator</a>
+            </div>
+        </div>
+        <a href="#">About</a>
+    </nav>
 
-        <!-- Ad Space -->
-        <section id="ad-space">
-            <h2>Advertisement</h2>
-            <!-- Google AdSense Ad Unit -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-YOUR_AD_SENSE_ID"
-                 data-ad-slot="YOUR_AD_UNIT_ID"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </section>
-    </main>
+    <section id="compression-tool">
+        <h2>Image Compressor</h2>
+        <label for="image-input">Choose Image</label>
+        <input type="file" id="image-input" accept="image/*">
+        <br>
+        <label for="compression-level">Compression Level:</label>
+        <select id="compression-level">
+            <option value="0.1">Low</option>
+            <option value="0.5" selected>Medium</option>
+            <option value="0.9">High</option>
+        </select>
+        <br>
+        <button id="compress-btn">Compress Image</button>
+        <div id="image-container">
+            <img id="original-image" src="#" alt="Original Image" style="display: none;">
+            <img id="compressed-image" src="#" alt="Compressed Image" style="display: none;">
+        </div>
+        <a id="download-link" href="#" download="compressed-image.jpg">Download Compressed Image</a>
+    </section>
 
     <footer>
-        <p>&copy; 2023 Online Image Compression Tool. All rights reserved.</p>
+        <p>&copy; 2023 Online Tools. All rights reserved.</p>
     </footer>
 
     <script>
