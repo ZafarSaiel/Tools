@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Generate QR codes online with our fully responsive QR Code Generator tool. Create QR codes for URLs, text, and more.">
+    <meta name="keywords" content="QR Code Generator, QR Code, QR Code Creator, Online Tools">
+    <meta name="author" content="Your Name">
+    <title>QR Code Generator - Online Tools</title>
+    <style>
+        /* CSS Styling (Same as previous tools) */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #45a049;
+            padding: 10px;
+            position: relative;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #f1c40f;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #45a049;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            top: 100%;
+            left: 0;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #4CAF50;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        #qr-generator {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        #qr-generator h2 {
+            margin-top: 0;
+            font-size: 2rem;
+            color: #4CAF50;
+        }
+
+        #qr-generator input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        #qr-generator button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        #qr-generator button:hover {
+            background-color: #45a049;
+        }
+
+        #qr-code-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        #qr-code-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #download-link {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #download-link:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            #qr-generator h2 {
+                font-size: 1.5rem;
+            }
+
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dropdown-content {
+                position: static;
+            }
+        }
+    </style>
+    <!-- QRCode.js Library for Generating QR Codes -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Online Tools</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="dropdown">
+            <a href="#">Image Tools</a>
+            <div class="dropdown-content">
+                <a href="image-compressor.html">Image Compressor</a>
+                <a href="image-resizer.html">Image Resizer</a>
+                <a href="image-cropper.html">Image Cropper</a>
+                <a href="image-converter.html">Image Converter</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#">PDF Tools</a>
+            <div class="dropdown-content">
+                <a href="file-converter.html">File Converter</a>
+                <a href="pdf-merger.html">PDF Merger</a>
+                <a href="pdf-splitter.html">PDF Splitter</a>
+                <a href="pdf-compressor.html">PDF Compressor</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#">Other Tools</a>
+            <div class="dropdown-content">
+                <a href="qr-generator.html">QR Code Generator</a>
+                <a href="#">Color Picker</a>
+                <a href="#">File Converter</a>
+                <a href="#">Password Generator</a>
+            </div>
+        </div>
+        <a href="#">About</a>
+    </nav>
+
+    <section id="qr-generator">
+        <h2>QR Code Generator</h2>
+        <input type="text" id="qr-input" placeholder="Enter text or URL">
+        <br>
+        <button id="generate-btn">Generate QR Code</button>
+
+        <!-- QR Code Container -->
+        <div id="qr-code-container">
+            <div id="qr-code"></div>
+        </div>
+
+        <!-- Download Link -->
+        <a id="download-link" href="#" download="qrcode.png">Download QR Code</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Online Tools. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // JavaScript Functionality
+        document.getElementById('generate-btn').addEventListener('click', function() {
+            const input = document.getElementById('qr-input').value;
+            const qrCodeContainer = document.getElementById('qr-code');
+            const qrCodeDisplay = document.getElementById('qr-code-container');
+            const downloadLink = document.getElementById('download-link');
+
+            if (!input) {
+                alert('Please enter text or a URL to generate a QR code.');
+                return;
+            }
+
+            // Clear previous QR code
+            qrCodeContainer.innerHTML = '';
+
+            // Generate new QR code
+            const qrCode = new QRCode(qrCodeContainer, {
+                text: input,
+                width: 256,
+                height: 256,
+            });
+
+            // Show QR code container
+            qrCodeDisplay.style.display = 'block';
+
+            // Create download link for the QR code
+            const qrCodeImage = qrCodeContainer.querySelector('img');
+            if (qrCodeImage) {
+                downloadLink.href = qrCodeImage.src;
+                downloadLink.style.display = 'inline-block';
+            }
+        });
+    </script>
+</body>
+</html>
