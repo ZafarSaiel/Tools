@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Split a PDF into individual pages online with our fully responsive PDF splitter tool. Extract pages quickly and easily.">
-    <meta name="keywords" content="PDF splitter, split PDF, online PDF splitter, PDF tools">
+    <meta name="description" content="Split PDFs into individual pages or sections with our fully responsive PDF Splitter tool. Easily extract pages from PDFs online.">
+    <meta name="keywords" content="PDF Splitter, Split PDF, Online PDF Splitter, PDF Tools">
     <meta name="author" content="Your Name">
     <title>PDF Splitter - Online Tools</title>
     <style>
@@ -89,7 +89,7 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
+            max-width: 800px;
             margin: 40px auto;
             text-align: center;
         }
@@ -116,6 +116,17 @@
 
         #splitter-tool label:hover {
             background-color: #45a049;
+        }
+
+        #split-options {
+            margin: 20px 0;
+            text-align: left;
+            display: inline-block;
+        }
+
+        #split-options label {
+            display: block;
+            margin: 10px 0;
         }
 
         #split-btn {
@@ -187,6 +198,16 @@
             }
         }
 
+        /* Ad Container Styling */
+        .ad-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .ad-container iframe {
+            border: none;
+        }
+
         footer {
             background-color: #333;
             color: white;
@@ -219,12 +240,14 @@
             }
         }
     </style>
-    <!-- PDF-Lib for PDF Splitting -->
+    <!-- PDF-Lib for PDF Manipulation -->
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <!-- JSZip for creating ZIP archives -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
     <!-- FileSaver.js for saving files -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <!-- Google AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_UNIT_ID" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -248,20 +271,21 @@
                 <a href="file-converter.html">File Converter</a>
                 <a href="pdf-merger.html">PDF Merger</a>
                 <a href="pdf-splitter.html">PDF Splitter</a>
-                <a href="#">PDF Compressor</a>
+                <a href="pdf-compressor.html">PDF Compressor</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="#">Other Tools</a>
             <div class="dropdown-content">
-                <a href="#">QR Code Generator</a>
-                <a href="#">Color Picker</a>
-                <a href="#">File Converter</a>
-                <a href="#">Password Generator</a>
+                <a href="qr-generator.html">QR Code Generator</a>
+                <a href="color-picker.html">Color Picker</a>
+                <a href="file-converter.html">File Converter</a>
+                <a href="password-generator.html">Password Generator</a>
             </div>
         </div>
         <a href="#">About</a>
     </nav>
+
     <!-- Ad Container -->
     <div class="ad-container">
         <ins class="adsbygoogle"
@@ -280,6 +304,34 @@
         <label for="pdf-input">Choose PDF File</label>
         <input type="file" id="pdf-input" accept="application/pdf">
         <br>
+
+        <!-- Split Options -->
+        <div id="split-options">
+            <label>
+                <input type="radio" name="split-option" value="all" checked> Split into Individual Pages
+            </label>
+            <label>
+                <input type="radio" name="split-option" value="range"> Split by Page Range
+            </label>
+            <label>
+                <input type="radio" name="split-option" value="custom"> Split by Custom Pages
+            </label>
+        </div>
+
+        <!-- Page Range Input -->
+        <div id="page-range-input" style="display: none;">
+            <label for="start-page">Start Page:</label>
+            <input type="number" id="start-page" min="1" placeholder="Start">
+            <label for="end-page">End Page:</label>
+            <input type="number" id="end-page" min="1" placeholder="End">
+        </div>
+
+        <!-- Custom Pages Input -->
+        <div id="custom-pages-input" style="display: none;">
+            <label for="custom-pages">Pages (e.g., 1,3,5-7):</label>
+            <input type="text" id="custom-pages" placeholder="1,3,5-7">
+        </div>
+
         <button id="split-btn">Split PDF</button>
 
         <!-- Progress Bar -->
@@ -293,6 +345,7 @@
         <!-- Download Link -->
         <a id="download-link" href="#" download="split-pdfs.zip">Download Split PDFs</a>
     </section>
+
     <!-- Ad Container -->
     <div class="ad-container">
         <ins class="adsbygoogle"
@@ -312,14 +365,39 @@
 
     <script>
         // JavaScript Functionality
-        document.getElementById('split-btn').addEventListener('click', async function() {
-            const fileInput = document.getElementById('pdf-input');
-            const downloadLink = document.getElementById('download-link');
-            const progressContainer = document.getElementById('progress-container');
-            const progressBar = document.getElementById('progress-bar');
-            const notification = document.getElementById('notification');
+        const pdfInput = document.getElementById('pdf-input');
+        const splitOptions = document.querySelectorAll('input[name="split-option"]');
+        const pageRangeInput = document.getElementById('page-range-input');
+        const customPagesInput = document.getElementById('custom-pages-input');
+        const startPageInput = document.getElementById('start-page');
+        const endPageInput = document.getElementById('end-page');
+        const customPagesText = document.getElementById('custom-pages');
+        const splitBtn = document.getElementById('split-btn');
+        const downloadLink = document.getElementById('download-link');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const notification = document.getElementById('notification');
 
-            if (fileInput.files.length === 0) {
+        // Show/hide input fields based on split option
+        splitOptions.forEach(option => {
+            option.addEventListener('change', function() {
+                if (this.value === 'range') {
+                    pageRangeInput.style.display = 'block';
+                    customPagesInput.style.display = 'none';
+                } else if (this.value === 'custom') {
+                    pageRangeInput.style.display = 'none';
+                    customPagesInput.style.display = 'block';
+                } else {
+                    pageRangeInput.style.display = 'none';
+                    customPagesInput.style.display = 'none';
+                }
+            });
+        });
+
+        // Split PDF
+        splitBtn.addEventListener('click', async function() {
+            const file = pdfInput.files[0];
+            if (!file) {
                 alert('Please select a PDF file to split.');
                 return;
             }
@@ -328,23 +406,59 @@
             progressContainer.style.display = 'block';
             progressBar.style.width = '0%';
 
-            const file = fileInput.files[0];
             const reader = new FileReader();
-
             reader.onload = async function(e) {
                 const existingPdfBytes = new Uint8Array(e.target.result);
                 const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
                 const zip = new JSZip();
 
-                for (let i = 0; i < pdfDoc.getPageCount(); i++) {
+                const selectedOption = document.querySelector('input[name="split-option"]:checked').value;
+                let pagesToSplit = [];
+
+                if (selectedOption === 'all') {
+                    // Split all pages
+                    pagesToSplit = pdfDoc.getPageIndices();
+                } else if (selectedOption === 'range') {
+                    // Split by page range
+                    const startPage = parseInt(startPageInput.value) - 1;
+                    const endPage = parseInt(endPageInput.value) - 1;
+                    if (isNaN(startPage) || isNaN(endPage) || startPage < 0 || endPage >= pdfDoc.getPageCount() || startPage > endPage) {
+                        alert('Please enter a valid page range.');
+                        return;
+                    }
+                    pagesToSplit = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+                } else if (selectedOption === 'custom') {
+                    // Split by custom pages
+                    const customPages = customPagesText.value.split(',').map(page => page.trim());
+                    for (const page of customPages) {
+                        if (page.includes('-')) {
+                            const [start, end] = page.split('-').map(p => parseInt(p) - 1);
+                            if (isNaN(start) || isNaN(end) || start < 0 || end >= pdfDoc.getPageCount() || start > end) {
+                                alert('Please enter valid custom pages.');
+                                return;
+                            }
+                            pagesToSplit.push(...Array.from({ length: end - start + 1 }, (_, i) => start + i));
+                        } else {
+                            const pageNum = parseInt(page) - 1;
+                            if (isNaN(pageNum) || pageNum < 0 || pageNum >= pdfDoc.getPageCount()) {
+                                alert('Please enter valid custom pages.');
+                                return;
+                            }
+                            pagesToSplit.push(pageNum);
+                        }
+                    }
+                }
+
+                // Create individual PDFs for selected pages
+                for (let i = 0; i < pagesToSplit.length; i++) {
                     const newPdfDoc = await PDFLib.PDFDocument.create();
-                    const [copiedPage] = await newPdfDoc.copyPages(pdfDoc, [i]);
+                    const [copiedPage] = await newPdfDoc.copyPages(pdfDoc, [pagesToSplit[i]]);
                     newPdfDoc.addPage(copiedPage);
                     const pdfBytes = await newPdfDoc.save();
-                    zip.file(`page-${i + 1}.pdf`, pdfBytes);
+                    zip.file(`page-${pagesToSplit[i] + 1}.pdf`, pdfBytes);
 
                     // Update progress bar
-                    progressBar.style.width = `${((i + 1) / pdfDoc.getPageCount()) * 100}%`;
+                    progressBar.style.width = `${((i + 1) / pagesToSplit.length) * 100}%`;
                 }
 
                 // Generate ZIP file
@@ -361,7 +475,6 @@
                     progressContainer.style.display = 'none';
                 }, 1000);
             };
-
             reader.readAsArrayBuffer(file);
         });
     </script>
